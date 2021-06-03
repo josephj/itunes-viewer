@@ -1,7 +1,10 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { RestLink } from 'apollo-link-rest';
+
+const restLink = new RestLink({ uri: 'https://itunes.apple.com' });
 
 const client = new ApolloClient({
-  uri: 'https://countries.trevorblades.com',
+  link: restLink,
   cache: new InMemoryCache()
 });
 

@@ -18,8 +18,8 @@ A viewer for browsing the iTunes public catalogue.
 ## Tech Stacks
 
 - React + NextJS
-- Apollo Client
-- styled-components
+- Apollo Client (REST Link)
+- Chakra UI
 - TypeScript
 
 ## Bonus points
