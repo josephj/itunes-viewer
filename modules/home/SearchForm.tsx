@@ -1,14 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Search2Icon } from '@chakra-ui/icons';
 import {
-  CloseButton,
   FormControl,
   FormHelperText,
   FormLabel,
   Input,
   InputGroup,
   InputLeftElement,
-  InputRightElement,
 } from '@chakra-ui/react';
 
 type SearchFormProps = {
@@ -17,11 +15,7 @@ type SearchFormProps = {
   onCancel: () => void;
 };
 
-export const SearchForm = ({
-  onCancel,
-  onChange,
-  onSubmit,
-}: SearchFormProps) => {
+export const SearchForm = ({ onChange, onSubmit }: SearchFormProps) => {
   const [value, setValue] = useState('');
   const inputRef = useRef(null);
   useEffect(() => {
@@ -35,9 +29,10 @@ export const SearchForm = ({
   const handleKeyup = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') onSubmit(value);
   };
+  const handleSubmit = (e: React.FormEvent) => e.preventDefault();
 
   return (
-    <form role="search">
+    <form role="search" onSubmit={handleSubmit}>
       <FormControl>
         <FormLabel htmlFor="keyword" fontSize="xs">
           Search Keyword

@@ -1,5 +1,5 @@
 import { gql, useQuery } from '@apollo/client';
-import { Container, Divider, Grid, Box, Heading } from '@chakra-ui/react';
+import { Divider, Grid, Box, Heading } from '@chakra-ui/react';
 import debounce from 'lodash.debounce';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -39,21 +39,19 @@ export default function Home() {
   const router = useRouter();
   const [keyword, setKeyword] = useState('');
 
-  console.log('router', router.query);
-
-  const {
-    loading: isLoading,
-    error,
-    data: searchResults,
-  } = useQuery(getSearchResultQuery, {
-    variables: {
-      term: keyword,
-    },
-  });
+  const { loading: isLoading, error, data: searchResults } = useQuery(
+    getSearchResultQuery,
+    {
+      variables: {
+        term: encodeURIComponent(keyword),
+      },
+    }
+  );
 
   const handleSearchChange = value => {
     setKeyword(value);
-    router.push(`?search=${value}`);
+    // TODO - Reload and keep the search
+    // router.push(`?search=${value}`);
   };
   const handleSearchChangeDebounce = debounce(handleSearchChange, 1000);
   const handleSearchCancel = () => setKeyword('');
@@ -91,7 +89,11 @@ export default function Home() {
               <Heading as="h2" my={3} size="md" textAlign="center">
                 Search Result
               </Heading>
-              <Grid templateColumns={['1fr', 'repeat(4, 1fr)']} gap={[2, 6]}>
+              <Grid
+                justifyContent="center"
+                templateColumns={['repeat(auto-fit, minmax(250px, 1fr))']}
+                gap={[4]}
+              >
                 {searchResults.result.results.map(entry => (
                   <ResultItem
                     key={[entry.trackId, entry.artistId].join('-')}

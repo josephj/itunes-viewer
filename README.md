@@ -2,6 +2,25 @@
 
 A viewer for browsing the iTunes public catalogue.
 
+## Demo
+
+https://itunes-viewer.vercel.app/
+
+## Install & Run
+
+```
+git clone https://github.com/josephj/itunes-viewer.git
+cd itunes-viewer
+yarn 
+yarn dev
+```
+
+It contains storybook
+
+```
+yarn storybook
+```
+
 ## Summary
 
 * About UI design - I can decide. Keep clean and simple.
@@ -25,20 +44,22 @@ A viewer for browsing the iTunes public catalogue.
 ## Bonus points
 
 - Unit Test / Cypress
-- Deploy - Netlify
+  - Only storybook snapshot testing at this moment
+- Deploy - Vercel
 - Accessibility - Making your application accessible.
+  - Several `role` attributes
 
 ## What we're assessing
 
 Not only JavaScript 🙂. We're looking for a good demonstration across all areas of front-end development, e.g.:
 
 - How well you can write semantic HTML.
+  - Headings, `<header/>`, `<main/>`, `<footer/>`
 - How well you can write and organise CSS.
+  - [Style System](https://styled-system.com/) with Chakra UI library.
 - How well you can componentise a UI.
+  - `component`: Reusable UI library
+  - `modules/<feature>`: Orgainised by feature
 - How well you can optimise for performance.
-
-# Questions
-
-> Once you're done and happy with your result, please submit a Pull Request to this repository 👍.
-
-It's a gist. How should I make a PR?
+  - Plan to use **GraphQL** to reduce duplicate call.
+  - Plan to use more **SSR** in the first load.

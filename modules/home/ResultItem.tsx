@@ -17,12 +17,11 @@ const ResultItem = ({
   releaseDate,
 }: ResultItemProps) => (
   <Flex
-    alignItems="center"
-    justifyContent="center"
     flexDirection="column"
-    maxW={['330px', '250px']}
+    width="100%"
     bg="blackAlpha.100"
     mb={[5, 2]}
+    as="figure"
   >
     <Box style={{ position: 'relative' }}>
       <Tooltip label={artistName} aria-label="A tooltip">
@@ -35,11 +34,13 @@ const ResultItem = ({
           {artistName}
         </InfoText>
       </Tooltip>
-      <Image
-        src={artworkUrl100.replace(/100x100/, '600x600')}
-        width="100%"
-        borderRadius="md"
-      />
+      <Box minH="250px">
+        <Image
+          src={artworkUrl100.replace(/100x100/, '600x600')}
+          width="100%"
+          borderRadius="md"
+        />
+      </Box>
     </Box>
 
     <Tooltip label={collectionName} aria-label="A tooltip">
