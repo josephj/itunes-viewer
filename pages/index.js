@@ -39,6 +39,12 @@ export default function Home() {
   const router = useRouter();
   const [keyword, setKeyword] = useState('');
 
+  const { search } = router.query;
+  useEffect(() => {
+    if (keyword !== search) setKeyword(search);
+  }, [search]);
+
+  // TODO - Use lazy query
   const { loading: isLoading, error, data: searchResults } = useQuery(
     getSearchResultQuery,
     {
@@ -50,11 +56,10 @@ export default function Home() {
 
   const handleSearchChange = value => {
     setKeyword(value);
-    // TODO - Reload and keep the search
-    // router.push(`?search=${value}`);
+    const query = !!value ? `?search=${value}` : '/';
+    router.push(query);
   };
   const handleSearchChangeDebounce = debounce(handleSearchChange, 1000);
-  const handleSearchCancel = () => setKeyword('');
 
   return (
     <Box mx={5}>
@@ -68,7 +73,6 @@ export default function Home() {
           mb={5}
           onChange={handleSearchChangeDebounce}
           onSubmit={handleSearchChange}
-          onCancel={handleSearchCancel}
         />
       </Header>
       <Box as="main" my={5}>
