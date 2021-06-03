@@ -1,5 +1,4 @@
-import { Flex, Stack, Text } from '@chakra-ui/react';
-import Image from 'next/image';
+import { Flex, Image, Stack, Text } from '@chakra-ui/react';
 
 type Props = {
   iconSrc: string;
@@ -8,18 +7,19 @@ type Props = {
 };
 
 const Message = ({ iconSize, iconSrc, text }: Props) => (
-  <Flex
-    direction="column"
-    height="300px"
-    justify="center"
-    align="center"
-    width="100%"
-  >
-    <Stack spacing={5}>
-      <Image src={iconSrc} width={iconSize || 200} height={iconSize || 200} />
-      <Text fontSize="xs">{text}</Text>
-    </Stack>
-  </Flex>
+  <Stack spacing={5}>
+    <Flex height="300" alignItems="center">
+      <Image
+        src={iconSrc}
+        width={iconSize || 200}
+        height={iconSize || 200}
+        mx="auto"
+      />
+    </Flex>
+    <Text fontSize="xs" textAlign="center">
+      {text}
+    </Text>
+  </Stack>
 );
 
 export default Message;
