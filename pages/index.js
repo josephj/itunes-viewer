@@ -1,8 +1,7 @@
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { Divider, Grid, Box, Heading } from '@chakra-ui/react';
 import debounce from 'lodash.debounce';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 import {
   EmptyMessage,
@@ -11,32 +10,9 @@ import {
   WelcomeMessage,
 } from '../components';
 import { Header, Footer, ResultItem, SearchForm } from '../modules/home';
-
-const getSearchResultQuery = gql`
-  query Search($term: String, $country: String) {
-    result(term: $term, country: $country)
-      @rest(path: "/search?term={args.term}&country=AU") {
-      count: resultCount
-      results {
-        artistId
-        artistViewUrl
-        artworkUrl100
-        artistName
-        collectionId
-        collectionName
-        previewUrl
-        primaryGenreName
-        releaseDate
-        trackName
-        trackId
-        trackViewUrl
-      }
-    }
-  }
-`;
+import { getSearchResultQuery } from './_queries';
 
 export default function Home() {
-  const router = useRouter();
   const [keyword, setKeyword] = useState('');
 
   const { search } = router.query;
