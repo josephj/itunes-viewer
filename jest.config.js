@@ -7,4 +7,7 @@ module.exports = {
   transform: {
     '\\.[jt]sx?$': 'babel-jest',
   },
+  moduleNameMapper: {
+    '\\.svg': '<rootDir>/__mocks__/svgrMock.js',
+  },
 };

@@ -10,8 +10,13 @@ import {
   Loading,
   WelcomeMessage,
 } from '../components';
-import { Header, Footer, ResultItem, SearchForm } from '../modules/home';
-import { getSearchResultQuery } from './_queries';
+import {
+  Header,
+  Footer,
+  ResultItem,
+  SearchForm,
+  getSearchResultQuery,
+} from '../modules/home';
 
 export default function Home() {
   const [keyword, setKeyword] = useState('');
