@@ -46,7 +46,7 @@ export const SearchForm = ({ onChange, onSubmit }: SearchFormProps) => {
             type="search"
             name="keyword"
             spellCheck="false"
-            placeholder="Search any artist, album, move, or podcast on iTunes"
+            placeholder="Search any album and artist name"
             value={value}
             ref={inputRef}
             onKeyUp={handleKeyup}

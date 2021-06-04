@@ -7,6 +7,7 @@ import WelcomeMessage from './WelcomeMessage';
 
 // @ts-ignore
 import imgAtom from '../../public/atom.svg';
+console.log('imgAtom :', imgAtom);
 
 export default {
   title: 'Message',

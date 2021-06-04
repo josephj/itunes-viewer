@@ -2,7 +2,8 @@ import { useQuery } from '@apollo/client';
 import { Divider, Grid, Box, Heading } from '@chakra-ui/react';
 import debounce from 'lodash.debounce';
 import Head from 'next/head';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import {
   EmptyMessage,
   ErrorMessage,
@@ -14,6 +15,12 @@ import { getSearchResultQuery } from './_queries';
 
 export default function Home() {
   const [keyword, setKeyword] = useState('');
+  const router = useRouter();
+
+  useEffect(() => {
+    const { search } = router.query;
+    if (!keyword) setKeyword(search);
+  }, [router.query]);
 
   const { search } = router.query;
   useEffect(() => {
@@ -76,9 +83,10 @@ export default function Home() {
               >
                 {searchResults.result.results.map(entry => (
                   <ResultItem
-                    key={[entry.trackId, entry.artistId].join('-')}
+                    key={entry.collectionId}
                     artistName={entry.artistName}
                     artworkUrl100={entry.artworkUrl100}
+                    collectionId={entry.collectionId}
                     collectionName={entry.collectionName}
                     releaseDate={entry.releaseDate}
                     trackName={entry.trackName}

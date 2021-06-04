@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import Link from 'next/link';
 import { Box, Flex, Image, Text, Tooltip } from '@chakra-ui/react';
 import { formatDistance } from 'date-fns';
 
@@ -6,6 +7,7 @@ type ResultItemProps = {
   artistName: string;
   artworkUrl100: string;
   collectionName: string;
+  collectionId: number;
   releaseDate: string;
   trackName: string;
 };
@@ -14,6 +16,7 @@ const ResultItem = ({
   artistName,
   artworkUrl100,
   collectionName,
+  collectionId,
   releaseDate,
 }: ResultItemProps) => (
   <Flex
@@ -35,11 +38,13 @@ const ResultItem = ({
         </InfoText>
       </Tooltip>
       <Box minH="250px">
-        <Image
-          src={artworkUrl100.replace(/100x100/, '600x600')}
-          width="100%"
-          borderRadius="md"
-        />
+        <Link href={`/album/${collectionId}`}>
+          <Image
+            src={artworkUrl100.replace(/100x100/, '600x600')}
+            width="100%"
+            borderRadius="md"
+          />
+        </Link>
       </Box>
     </Box>
 
