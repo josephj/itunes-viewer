@@ -11,8 +11,8 @@ import {
   WelcomeMessage,
 } from '../components';
 import {
-  Header,
   Footer,
+  Header,
   ResultItem,
   SearchForm,
   getSearchResultQuery,
