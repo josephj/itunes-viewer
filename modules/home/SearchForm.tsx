@@ -1,3 +1,4 @@
+import isNil from 'lodash.isnil';
 import React, { useEffect, useRef, useState } from 'react';
 import { Search2Icon } from '@chakra-ui/icons';
 import {
@@ -10,25 +11,37 @@ import {
 } from '@chakra-ui/react';
 
 type SearchFormProps = {
+  value?: string;
+  defaultValue?: string;
   onChange: (keyword: string) => void;
-  onSubmit: (keyword: string) => void;
-  onCancel: () => void;
+  onSubmit?: (keyword: string) => void;
 };
 
-export const SearchForm = ({ onChange, onSubmit }: SearchFormProps) => {
-  const [value, setValue] = useState('');
+export const SearchForm = ({
+  value,
+  defaultValue = '',
+  onChange,
+  onSubmit,
+}: SearchFormProps) => {
+  const [inputValue, setInputValue] = useState(defaultValue);
   const inputRef = useRef(null);
   useEffect(() => {
     inputRef.current && inputRef.current.focus();
   }, []);
+
+  useEffect(() => {
+    if (!isNil(value)) setInputValue(value);
+  }, [value]);
+
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
-    const value = e.currentTarget.value;
-    setValue(value);
-    onChange(value);
+    const currentValue = e.currentTarget.value;
+    onChange(currentValue);
+    setInputValue(currentValue);
   };
   const handleKeyup = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') onSubmit(value);
+    if (onSubmit && e.key === 'Enter') onSubmit(inputValue);
   };
+
   const handleSubmit = (e: React.FormEvent) => e.preventDefault();
 
   return (
@@ -47,10 +60,11 @@ export const SearchForm = ({ onChange, onSubmit }: SearchFormProps) => {
             name="keyword"
             spellCheck="false"
             placeholder="Search any album and artist name"
-            value={value}
+            value={inputValue}
             ref={inputRef}
             onKeyUp={handleKeyup}
             onChange={handleChange}
+            onAbort={handleChange}
           />
         </InputGroup>
         <FormHelperText fontSize="xs" textAlign="right">

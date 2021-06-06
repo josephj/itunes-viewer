@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { Divider, Grid, Box, Heading } from '@chakra-ui/react';
-import debounce from 'lodash.debounce';
+// @ts-ignore
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -16,38 +16,35 @@ import {
   ResultItem,
   SearchForm,
   getSearchResultQuery,
+  useDebounce,
 } from '../modules/home';
 
 export default function Home() {
   const [keyword, setKeyword] = useState('');
+
+  // Update search keyword by the query
   const router = useRouter();
-
-  useEffect(() => {
-    const { search } = router.query;
-    if (!keyword) setKeyword(search);
-  }, [router.query]);
-
-  const { search } = router.query;
+  const search = router?.query?.search?.toString();
   useEffect(() => {
     if (keyword !== search) setKeyword(search);
   }, [search]);
 
-  // TODO - Use lazy query
+  // GraphQL
+  const debounceKeyword = useDebounce(keyword, 1000);
   const { loading: isLoading, error, data: searchResults } = useQuery(
     getSearchResultQuery,
     {
       variables: {
-        term: encodeURIComponent(keyword),
+        term: encodeURIComponent(debounceKeyword),
       },
     }
   );
 
-  const handleSearchChange = value => {
+  const handleSearchChange = (value: string) => {
     setKeyword(value);
     const query = !!value ? `?search=${value}` : '/';
-    router.push(query);
+    router.replace(query);
   };
-  const handleSearchChangeDebounce = debounce(handleSearchChange, 1000);
 
   return (
     <Box mx={5}>
@@ -57,11 +54,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header>
-        <SearchForm
-          mb={5}
-          onChange={handleSearchChangeDebounce}
-          onSubmit={handleSearchChange}
-        />
+        <SearchForm value={keyword} onChange={handleSearchChange} />
       </Header>
       <Box as="main" my={5}>
         {(() => {
@@ -74,7 +67,7 @@ export default function Home() {
 
           if (!hasKeyword) return <WelcomeMessage />;
           if (isLoading) return <Loading />;
-          if (hasError) return <ErrorMessage error={error} />;
+          if (hasError) return <ErrorMessage />;
           if (!hasResults) return <EmptyMessage />;
           return (
             <section>

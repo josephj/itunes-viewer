@@ -1,9 +1,11 @@
-module.exports = {
+import * as path from 'path';
+
+export default {
   stories: ['../components/**/stories.@(js|jsx|ts|tsx)'],
   addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
-  webpackFinal: async (config, { configType }) => {
+  webpackFinal: async (config: any) => {
     const fileLoaderRule = config.module.rules.find(
-      rule => !Array.isArray(rule.test) && rule.test.test('.svg')
+      (rule: any) => !Array.isArray(rule.test) && rule.test.test('.svg')
     );
     fileLoaderRule.exclude = /\.svg$/;
     config.module.rules.push({
